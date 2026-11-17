@@ -1,122 +1,467 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AgentPet — Windows 桌宠 | Antigravity、Codex 与 DeepSeek Harness</title>
-  <meta name="description" content="AgentPet 是面向 Antigravity、Codex 与 DeepSeek Harness 的开源 Windows 桌宠。查看 AI 编码状态、Codex 额度和 DeepSeek 余额，下载免安装便携版。">
-  <link rel="canonical" href="https://uoweme325.github.io/AgentPet/">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="AgentPet — Windows AI 编码桌宠">
-  <meta property="og:description" content="在 Windows 桌面查看 Antigravity、Codex 和 DeepSeek Harness 的工作状态。">
-  <meta property="og:url" content="https://uoweme325.github.io/AgentPet/">
-  <meta property="og:image" content="https://raw.githubusercontent.com/uoweme325/AgentPet/v1.6.2/preview/claude-idle-preview.png">
-  <style>
-    :root {
-      color-scheme: light dark;
-      --bg: #f8fafc; --card: #fff; --text: #0f172a; --muted: #475569;
-      --accent: #075985; --border: #dbe5f0; --preview: #edf6ff;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f172a; --card: #172338; --text: #f1f5f9; --muted: #b6c4d7;
-        --accent: #7dd3fc; --border: #34445e; --preview: #22344e;
-      }
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--text); font: 1rem/1.65 system-ui, "Segoe UI", "Microsoft YaHei", sans-serif; }
-    main { max-width: 920px; margin: auto; padding: 32px 20px 56px; }
-    a { color: var(--accent); text-underline-offset: .22em; }
-    a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-    header { margin: 34px 0; }
-    h1 { margin: 0; font-size: clamp(2.5rem, 7vw, 4rem); line-height: 1.1; }
-    h2 { margin: 0 0 12px; font-size: 1.35rem; }
-    p { margin: 0 0 12px; }
-    .lead { font-size: 1.25rem; margin: 12px 0; font-weight: 650; }
-    .muted, figcaption span { color: var(--muted); }
-    .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
-    .button { display: inline-block; padding: 9px 15px; border: 1px solid var(--border); border-radius: 9px; background: var(--card); font-weight: 650; }
-    .primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
-    .characters, .features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    figure, .feature, .setup { margin: 0; background: var(--card); border: 1px solid var(--border); border-radius: 13px; }
-    figure { overflow: hidden; text-align: center; }
-    figure img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: var(--preview); }
-    figcaption { padding: 8px 4px; font-size: .95rem; }
-    figcaption span { display: block; font-size: .82rem; }
-    section { margin-top: 30px; }
-    .feature, .setup { padding: 16px; }
-    .feature h3 { margin: 0 0 5px; font-size: 1.05rem; }
-    .feature p, .setup p:last-child { margin: 0; }
-    .links + p, .features + p { margin-top: 12px; }
-    .setup ol { margin-top: 0; padding-left: 1.55rem; }
-    footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border); font-size: .9rem; }
-    @media (max-width: 600px) {
-      .characters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .features { grid-template-columns: 1fr; }
-    }
-  </style>
-</head>
-<body>
-  <main>
-    <nav aria-label="站点导航"><a href="/">← 项目总览</a></nav>
-    <header>
-      <h1>AgentPet</h1>
-      <p class="lead">把 AI 编码助手的工作状态带到 Windows 桌面</p>
-      <p class="muted">用桌宠气泡看 Antigravity（反重力）、Codex 与 DeepSeek Harness 正在思考、工作，还是等你确认。</p>
-      <p class="muted" lang="en">A portable Windows desktop pet for Antigravity, Codex, and DeepSeek Harness, with live status, Codex quota, and DeepSeek balance.</p>
-      <div class="links">
-        <a class="button primary" href="https://github.com/uoweme325/AgentPet/releases/latest">下载 Windows 便携版</a>
-        <a class="button" href="https://github.com/uoweme325/AgentPet">查看 GitHub 仓库</a>
+ <head>
+  <meta content="light dark" name="color-scheme"/>
+  <meta content="scale" name="text-scale"/>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   AgentPet — Windows 桌宠 | Antigravity、Codex 与 DeepSeek Harness
+  </title>
+  <meta content="AgentPet 是面向 Antigravity、Codex 与 DeepSeek Harness 的开源 Windows 桌宠。查看 AI 编码状态、Codex 额度和 DeepSeek 余额，下载免安装便携版。" name="description"/>
+  <link href="https://uoweme325.github.io/AgentPet/" rel="canonical"/>
+  <meta content="website" property="og:type"/>
+  <meta content="AgentPet — Windows AI 编码桌宠" property="og:title"/>
+  <meta content="在 Windows 桌面查看 Antigravity、Codex 和 DeepSeek Harness 的工作状态。" property="og:description"/>
+  <meta content="https://uoweme325.github.io/AgentPet/" property="og:url"/>
+  <meta content="https://uoweme325.github.io/assets/agentpet-social.jpg" property="og:image"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
+  <meta content="AgentPet Windows 桌宠，小克与工作状态、额度和余额功能介绍" property="og:image:alt"/>
+  <link href="/assets/site.css" rel="stylesheet"/>
+  <meta content="#f8f9f6" media="(prefers-color-scheme: light)" name="theme-color"/>
+  <meta content="#131d2a" media="(prefers-color-scheme: dark)" name="theme-color"/>
+  <link href="/assets/claude-pet.ico" rel="icon" type="image/x-icon"/>
+ </head>
+ <body>
+  <a class="skip" href="#main">
+   跳到正文
+  </a>
+  <header class="wrap site-nav">
+   <a class="brand" href="/">
+    <span aria-hidden="true" class="brand-mark">
+    </span>
+    uoweme325
+    <span class="soft">
+     .
+    </span>
+   </a>
+   <nav aria-label="主要" class="nav-links">
+    <a href="/#projects">
+     项目
+    </a>
+    <a aria-current="page" href="/AgentPet/">
+     AgentPet
+    </a>
+    <a href="https://github.com/uoweme325">
+     GitHub ↗
+    </a>
+   </nav>
+  </header>
+  <main class="wrap" id="main" tabindex="-1">
+   <section aria-labelledby="pet-title" class="hero">
+    <div>
+     <p class="eyebrow">
+      WINDOWS 桌面小搭档
+     </p>
+     <h1 class="latin" id="pet-title">
+      AgentPet
+      <span class="soft">
+       .
+      </span>
+     </h1>
+     <p class="tagline">
+      你专心写代码，
+      <br/>
+      让她帮你看状态。
+     </p>
+     <p class="intro">
+      思考、工作，还是等你确认？把 AI 编码助手的状态放在
+      <span class="keep">
+       桌面
+      </span>
+      ，也顺手看一眼额度与余额。
+     </p>
+     <div class="actions">
+      <a class="btn" href="https://github.com/uoweme325/AgentPet/releases/latest">
+       下载 Windows 便携版
+       <span aria-hidden="true">
+        ↓
+       </span>
+      </a>
+      <a class="text-link" href="https://github.com/uoweme325/AgentPet">
+       查看源码 ↗
+      </a>
+     </div>
+     <p class="release">
+      <a href="https://github.com/uoweme325/AgentPet/releases/tag/v1.6.3">
+       v1.6.3 更新说明
+      </a>
+      · 开源 · 解压即用
+     </p>
+    </div>
+    <div class="pet-scene" data-character="claude">
+     <span class="scene-note">
+      角色与状态气泡 · 展示示意
+     </span>
+     <div class="speech">
+      <div class="speech-header">
+       <strong class="speech-state">
+        <span aria-hidden="true" class="dot">
+        </span>
+        等你确认，再继续。
+       </strong>
       </div>
-      <p><a href="https://github.com/uoweme325/AgentPet/releases/tag/v1.6.2">v1.6.2 更新说明</a></p>
-    </header>
-    <section aria-labelledby="characters">
-      <h2 id="characters">角色预览</h2>
-      <div class="characters">
-        <figure>
-          <img src="https://raw.githubusercontent.com/uoweme325/AgentPet/v1.6.2/preview/claude-idle-preview.png" alt="小克的待机立绘" width="384" height="384">
-          <figcaption>小克 <span>Claude 娘</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://raw.githubusercontent.com/uoweme325/AgentPet/v1.6.2/preview/dragon-idle-preview.png" alt="白龙的待机立绘" width="384" height="384">
-          <figcaption>白龙 <span>GPT 娘</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://raw.githubusercontent.com/uoweme325/AgentPet/v1.6.2/preview/gemini-idle-preview.png" alt="双子的待机立绘" width="384" height="384">
-          <figcaption>双子 <span>Gemini 娘</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://raw.githubusercontent.com/uoweme325/AgentPet/v1.6.2/preview/deepseek-idle-preview.png" alt="大肥鱼的待机立绘" width="384" height="384">
-          <figcaption>大肥鱼 <span>DeepSeek 娘</span></figcaption>
-        </figure>
-        <figure>
-          <img src="https://raw.githubusercontent.com/uoweme325/AgentPet/v1.6.2/preview/zcode-idle-preview.png" alt="智谱娘的待机立绘" width="384" height="384">
-          <figcaption>智谱娘 <span>ZCode</span></figcaption>
-        </figure>
+      <div class="speech-body">
+       <span aria-hidden="true" class="speech-watermark">
+       </span>
+       <p>
+        把需要你留意的时刻，带到桌面上。
+       </p>
       </div>
-    </section>
-    <section aria-labelledby="features">
-      <h2 id="features">桌面上能看什么</h2>
-      <div class="features">
-        <article class="feature"><h3>工作状态</h3><p class="muted">查看支持的编码助手是否正在处理任务，或正在等待你回答、确认。</p></article>
-        <article class="feature"><h3>Codex 额度</h3><p class="muted">从右键菜单或托盘查看并刷新本地记录的使用额度。</p></article>
-        <article class="feature"><h3>DeepSeek 余额</h3><p class="muted">通过本机 DSH 查看人民币余额和可用明细，低于设定阈值时显示提醒。</p></article>
+     </div>
+     <img alt="小克的待机立绘" class="hero-pet" fetchpriority="high" height="384" id="hero-pet" src="/assets/claude.png" width="384"/>
+    </div>
+   </section>
+   <div class="compat">
+    <span>
+     支持状态联动
+    </span>
+    <strong>
+     <a href="https://antigravity.google/">Antigravity</a>
+    </strong>
+    <strong>
+     <a href="https://openai.com/codex/">Codex</a>
+    </strong>
+    <strong>
+     <a href="https://www.deepseek.com/harness/">DeepSeek Harness</a>
+    </strong>
+   </div>
+   <section aria-labelledby="features" class="section">
+    <div class="section-heading">
+     <h2 id="features">
+      少切几次窗口，多一点专注。
+     </h2>
+     <p>
+      需要知道的事，抬眼就看到。
+     </p>
+    </div>
+    <div class="features" data-character="claude">
+     <article class="feature">
+      <div class="feature-demo">
+       <div aria-label="工作看板示例" class="native-panel native-work" role="group">
+        <div class="native-work-header">
+         <div class="native-work-status">
+          <strong class="native-work-state">
+           <span aria-hidden="true" class="native-work-dot">
+           </span>
+           <span class="native-work-label">工作中</span>
+          </strong>
+         </div>
+         <ul aria-label="同时活跃的助手" class="native-sources" role="list">
+          <li class="native-source" data-agent="antigravity">
+           <img alt="" height="16" src="/assets/antigravity-icon.png" width="16"/>
+           <span>Antigravity</span>
+          </li>
+          <li class="native-source" data-agent="codex">
+           <img alt="" height="16" src="/assets/codex-icon.png" width="16"/>
+           <span>Codex</span>
+          </li>
+          <li class="native-source" data-agent="dsh">
+           <img alt="" height="16" src="/assets/dsh-icon.png" width="16"/>
+           <span>DSH<span class="sr-only">（DeepSeek Harness）</span></span>
+          </li>
+         </ul>
+        </div>
+        <div class="native-work-body">
+         <span aria-hidden="true" class="speech-watermark">
+         </span>
+         <p>
+          正在梳理接下来要做什么
+         </p>
+        </div>
+       </div>
       </div>
-      <p>手动查询结果保留 5 秒。鼠标悬停时气泡继续显示，移开后约 2 秒恢复工作看板，空闲时收起。待确认和审批提示优先显示。</p>
-    </section>
-    <section class="setup" aria-labelledby="setup">
-      <h2 id="setup">快速上手</h2>
-      <ol>
-        <li>从发布页面下载日常使用的 <code>AgentPet_v*.zip</code> 便携包并解压。</li>
-        <li>双击「启动 AgentPet.bat」，在系统托盘显示或隐藏桌宠。</li>
-        <li>右键桌宠切换角色、刷新额度，或在圆角菜单的「外观」中调节立绘、气泡大小和字号。</li>
-      </ol>
-      <p class="muted">工作状态监控需要 Node.js。DeepSeek 余额功能需要本机运行并配置 DeepSeek Harness。</p>
-    </section>
-    <footer>
-      项目代码采用 <a href="https://github.com/uoweme325/AgentPet/blob/main/LICENSE">MIT 许可</a>。
-      角色与音频素材见 <a href="https://github.com/uoweme325/AgentPet/blob/main/THIRD_PARTY_NOTICES.md">第三方声明</a>。
-    </footer>
+      <h3>
+       跟上工作进度
+      </h3>
+      <p>
+       多个助手的工作状态同时显示，及时发现需要回答或确认的时刻。
+      </p>
+     </article>
+     <article class="feature">
+      <div class="feature-demo">
+       <div aria-label="Codex 剩余额度示例" class="native-panel native-quota" role="group">
+        <div class="native-heading">
+         <img alt="" class="native-icon" height="16" src="/assets/codex-icon.png" width="16"/>
+         <strong>
+          Codex 剩余额度
+         </strong>
+         <span class="native-badge">
+          Plus
+         </span>
+         <span aria-hidden="true" class="native-refresh">
+          ↻
+         </span>
+        </div>
+        <div class="native-quota-row">
+         <span>
+          5 小时
+         </span>
+         <small>
+          2 小时后重置
+         </small>
+         <b>
+          68%
+         </b>
+        </div>
+        <meter aria-label="5 小时剩余额度，示例 68%" class="native-meter" max="100" min="0" value="68">
+         68%
+        </meter>
+        <div class="native-quota-row">
+         <span>
+          每周
+         </span>
+         <small>
+          明天 14:00 重置
+         </small>
+         <b>
+          84%
+         </b>
+        </div>
+        <meter aria-label="每周剩余额度，示例 84%" class="native-meter" max="100" min="0" value="84">
+         84%
+        </meter>
+       </div>
+      </div>
+      <h3>
+       随手查看额度
+      </h3>
+      <p>
+       在桌面查看本地记录的 Codex 使用额度，支持手动刷新。
+      </p>
+     </article>
+     <article class="feature">
+      <div class="feature-demo">
+       <div aria-label="DeepSeek 官方余额示例" class="native-panel native-balance" role="group">
+        <div class="native-heading">
+         <div class="native-title">
+          <img alt="" class="native-icon" height="16" src="/assets/dsh-icon.png" width="16"/>
+          <strong>DeepSeek 官方余额</strong>
+          <span class="native-badge">官方</span>
+         </div>
+         <small class="native-update">14:32 更新</small>
+         <span aria-hidden="true" class="native-refresh">
+          ↻
+         </span>
+        </div>
+        <div class="native-total">
+         <span>
+          人民币 CNY · DSH 宿主
+         </span>
+         <b>
+          ¥ 13.25
+         </b>
+        </div>
+        <p class="native-breakdown">
+         充值: ¥ 10.00　赠金: ¥ 3.25
+        </p>
+        <a class="native-pricing" href="https://api-docs.deepseek.com/quick_start/pricing/">
+         官方计费 ↗
+         <span class="sr-only">（DeepSeek API）</span>
+        </a>
+       </div>
+      </div>
+      <h3>
+       关注剩余余额
+      </h3>
+      <p>
+       通过本机 DeepSeek Harness 查看人民币余额与明细，低于设定阈值时提醒。
+      </p>
+     </article>
+    </div>
+    <p class="demo-note">
+     按桌宠面板样式展示，额度、余额与时间均为示例数据。
+    </p>
+   </section>
+   <section aria-labelledby="characters" class="section">
+    <div class="section-heading">
+     <h2 id="characters">
+      选一位，你的桌面搭档。
+     </h2>
+     <p>
+      点击角色，切换首屏立绘预览。
+     </p>
+    </div>
+    <fieldset class="character-grid">
+     <legend class="sr-only">
+      选择桌宠角色
+     </legend>
+     <label class="character" data-character="claude">
+      <input aria-controls="hero-pet" checked="" class="character-input" name="character" type="radio" value="claude"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/claude.png" width="384"/>
+      </span>
+      <strong>
+       小克
+      </strong>
+      <span class="character-family">
+       Claude 娘
+      </span>
+     </label>
+     <label class="character" data-character="dragon">
+      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="dragon"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/dragon.png" width="384"/>
+      </span>
+      <strong>
+       白龙
+      </strong>
+      <span class="character-family">
+       GPT 娘
+      </span>
+     </label>
+     <label class="character" data-character="gemini">
+      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="gemini"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/gemini.png" width="384"/>
+      </span>
+      <strong>
+       双子
+      </strong>
+      <span class="character-family">
+       Gemini 娘
+      </span>
+     </label>
+     <label class="character" data-character="deepseek">
+      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="deepseek"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/deepseek.png" width="384"/>
+      </span>
+      <strong>
+       大肥鱼
+      </strong>
+      <span class="character-family">
+       DeepSeek 娘
+      </span>
+     </label>
+     <label class="character" data-character="zcode">
+      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="zcode"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/zcode.png" width="384"/>
+      </span>
+      <strong>
+       智谱娘
+      </strong>
+      <span class="character-family">
+       ZCode
+      </span>
+     </label>
+    </fieldset>
+    <p aria-atomic="true" aria-live="polite" class="character-choice" role="status">
+     当前首屏预览为小克。
+    </p>
+   </section>
+   <section aria-labelledby="setup" class="setup">
+    <h2 id="setup">
+     三步，来到你的桌面。
+    </h2>
+    <ol class="steps">
+     <li>
+      <strong>
+       下载并解压
+      </strong>
+      <p>
+       从发行页下载 AgentPet_v*.zip 便携包，解压到日常使用的文件夹。
+      </p>
+     </li>
+     <li>
+      <strong>
+       双击启动
+      </strong>
+      <p>
+       运行「启动 AgentPet.bat」。系统托盘可以显示或隐藏桌宠。
+      </p>
+     </li>
+     <li>
+      <strong>
+       调成喜欢的样子
+      </strong>
+      <p>
+       右键桌宠切换角色，在「外观」里调整立绘、气泡与字号。
+      </p>
+     </li>
+    </ol>
+    <p class="requirements">
+     工作状态监控需要 Node.js。DeepSeek 余额功能需要本机运行并配置 DeepSeek Harness。
+    </p>
+   </section>
+   <section aria-labelledby="help" class="section">
+    <div class="section-heading">
+     <h2 id="help">
+      开始之前，你可能想知道。
+     </h2>
+    </div>
+    <details>
+     <summary>
+      气泡会一直挡住桌面吗？
+     </summary>
+     <p>
+      手动查询结果保留约 5 秒，鼠标悬停时继续显示，移开后约 2 秒恢复工作看板，空闲时收起。待确认与审批提示优先显示。
+     </p>
+    </details>
+    <details>
+     <summary>
+      v1.6.3 更新了什么？
+     </summary>
+     <p>
+      本次修复忙碌时气泡自动弹回、临时台词过早被覆盖，以及 DeepSeek 余额刷新回执和超时问题。
+      <a class="text-link" href="https://github.com/uoweme325/AgentPet/releases/tag/v1.6.3">
+       查看完整更新说明 ↗
+      </a>
+     </p>
+    </details>
+    <details>
+     <summary>
+      可以查看源码和素材说明吗？
+     </summary>
+     <p>
+      项目代码采用
+      <a class="text-link" href="https://github.com/uoweme325/AgentPet/blob/main/LICENSE">
+       MIT 许可
+      </a>
+      。角色与音频素材请查看
+      <a class="text-link" href="https://github.com/uoweme325/AgentPet/blob/main/THIRD_PARTY_NOTICES.md">
+       第三方声明
+      </a>
+      。
+     </p>
+    </details>
+   </section>
   </main>
-</body>
+  <footer class="wrap site-footer">
+   <span class="footer-greeting">
+    Ciallo
+    <span aria-hidden="true">
+     ～(∠・ω&lt; )⌒★
+    </span>
+   </span>
+   <span>
+    <a href="https://github.com/uoweme325">
+     GitHub
+    </a>
+    /
+    <a href="https://github.com/uoweme325/AgentPet/blob/main/THIRD_PARTY_NOTICES.md">
+     素材声明
+    </a>
+   </span>
+  </footer>
+  <script defer="" src="/assets/pet-preview.js">
+  </script>
+ </body>
 </html>
