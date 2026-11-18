@@ -1,7 +1,8 @@
 const choiceInputs = document.querySelectorAll('.character-input');
-const heroPet = document.querySelector('.hero-pet');
+const previews = document.querySelectorAll('img[data-panel]');
+const heroPet = document.querySelector('#hero-pet');
 const petScene = document.querySelector('.pet-scene');
-const speech = petScene.querySelector('.speech');
+
 const featurePreviews = document.querySelector('.features');
 const choiceLabel = document.querySelector('.character-choice');
 const interactiveLight = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
@@ -29,11 +30,13 @@ for (const input of choiceInputs) {
       const selected = document.querySelector('.character-input:checked');
       const card = selected.closest('.character');
       const name = card.querySelector('strong').textContent.trim();
-      heroPet.src = card.querySelector('img').src;
-      heroPet.alt = `${name}的待机立绘`;
+      for (const preview of previews) {
+        preview.src = `/assets/agentpet-1.6.4/${selected.value}-${preview.dataset.panel}.webp`;
+      }
+      heroPet.alt = `${name}等待确认，Codex 的状态气泡位于角色上方`;
       petScene.dataset.character = selected.value;
       featurePreviews.dataset.character = selected.value;
-      choiceLabel.textContent = `首屏预览已切换为${name}。`;
+      choiceLabel.textContent = `界面预览已切换为${name}。`;
       try {
         await heroPet.decode();
       } catch {
@@ -42,7 +45,6 @@ for (const input of choiceInputs) {
     };
     if (document.startViewTransition && !reducedMotion.matches) {
       heroPet.style.viewTransitionName = 'pet-portrait';
-      speech.style.viewTransitionName = 'pet-bubble';
       const transition = document.startViewTransition(applySelection);
       activeTransition = transition;
       // Rapid arrow-key selection can skip the previous visual snapshot.
@@ -50,7 +52,6 @@ for (const input of choiceInputs) {
       transition.finished.then(() => {
         if (activeTransition !== transition) return;
         heroPet.style.removeProperty('view-transition-name');
-        speech.style.removeProperty('view-transition-name');
         activeTransition = undefined;
       });
     } else {

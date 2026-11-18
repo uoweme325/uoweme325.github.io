@@ -18,7 +18,7 @@
   <meta content="1200" property="og:image:width"/>
   <meta content="630" property="og:image:height"/>
   <meta content="AgentPet Windows 桌宠，小克与工作状态、额度和余额功能介绍" property="og:image:alt"/>
-  <link href="/assets/site.css" rel="stylesheet"/>
+  <link href="/assets/site.css?v=164-preview" rel="stylesheet"/>
   <meta content="#f8f9f6" media="(prefers-color-scheme: light)" name="theme-color"/>
   <meta content="#131d2a" media="(prefers-color-scheme: dark)" name="theme-color"/>
   <link href="/assets/claude-pet.ico" rel="icon" type="image/x-icon"/>
@@ -91,26 +91,91 @@
      </p>
     </div>
     <div class="pet-scene" data-character="claude">
-     <span class="scene-note">
-      角色与状态气泡 · 展示示意
-     </span>
-     <div class="speech">
-      <div class="speech-header">
-       <strong class="speech-state">
-        <span aria-hidden="true" class="dot">
-        </span>
-        等你确认，再继续。
-       </strong>
-      </div>
-      <div class="speech-body">
-       <span aria-hidden="true" class="speech-watermark">
-       </span>
-       <p>
-        把需要你留意的时刻，带到桌面上。
-       </p>
-      </div>
-     </div>
-     <img alt="小克的待机立绘" class="hero-pet" fetchpriority="high" height="384" id="hero-pet" src="/assets/claude.png" width="384"/>
+     <div class="scene-caption"><strong>桌宠实机预览</strong><span>v1.6.4</span></div>
+     <img class="hero-capture" id="hero-pet" fetchpriority="high" data-panel="scene" alt="小克等待确认，Codex 的状态气泡位于角色上方" width="816" height="710" src="/assets/agentpet-1.6.4/claude-scene.webp"/>
+    <fieldset class="character-grid scene-choices" id="characters">
+     <legend class="sr-only">
+      切换预览角色
+     </legend>
+     <label class="character" data-character="claude">
+      <input aria-controls="hero-pet panel-examples" checked="" class="character-input" name="character" type="radio" value="claude"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/claude.png" width="384"/>
+      </span>
+      <strong>
+       小克
+      </strong>
+      <span class="character-family">
+       Claude娘
+      </span>
+     </label>
+     <label class="character" data-character="dragon">
+      <input aria-controls="hero-pet panel-examples" class="character-input" name="character" type="radio" value="dragon"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/dragon.png" width="384"/>
+      </span>
+      <strong>
+       白龙
+      </strong>
+      <span class="character-family">
+       GPT娘
+      </span>
+     </label>
+     <label class="character" data-character="gemini">
+      <input aria-controls="hero-pet panel-examples" class="character-input" name="character" type="radio" value="gemini"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/gemini.png" width="384"/>
+      </span>
+      <strong>
+       双子
+      </strong>
+      <span class="character-family">
+       Gemini娘
+      </span>
+     </label>
+     <label class="character" data-character="deepseek">
+      <input aria-controls="hero-pet panel-examples" class="character-input" name="character" type="radio" value="deepseek"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/deepseek.png" width="384"/>
+      </span>
+      <strong>
+       大肥鱼
+      </strong>
+      <span class="character-family">
+       DeepSeek娘
+      </span>
+     </label>
+     <label class="character" data-character="zcode">
+      <input aria-controls="hero-pet panel-examples" class="character-input" name="character" type="radio" value="zcode"/>
+      <span aria-hidden="true" class="character-selected">
+       ✓
+      </span>
+      <span class="character-portrait">
+       <img alt="" height="384" loading="lazy" src="/assets/zcode.png" width="384"/>
+      </span>
+      <strong>
+       智谱娘
+      </strong>
+      <span class="character-family">
+       GLM 娘
+      </span>
+     </label>
+    </fieldset>
+    <p aria-atomic="true" aria-live="polite" class="character-choice sr-only" role="status">
+     当前预览角色为小克。
+    </p>
     </div>
    </section>
    <div class="compat">
@@ -130,140 +195,38 @@
    <section aria-labelledby="features" class="section">
     <div class="section-heading">
      <h2 id="features">
-      少切几次窗口，多一点专注。
+      桌面上的三种气泡
      </h2>
-     <p>
-      需要知道的事，抬眼就看到。
-     </p>
     </div>
-    <div class="features" data-character="claude">
+    <div class="features" id="panel-examples" data-character="claude">
      <article class="feature">
       <div class="feature-demo">
-       <div aria-label="工作看板示例" class="native-panel native-work" role="group">
-        <div class="native-work-header">
-         <div class="native-work-status">
-          <strong class="native-work-state">
-           <span aria-hidden="true" class="native-work-dot">
-           </span>
-           <span class="native-work-label">工作中</span>
-          </strong>
-         </div>
-         <ul aria-label="同时活跃的助手" class="native-sources" role="list">
-          <li class="native-source" data-agent="antigravity">
-           <img alt="" height="16" src="/assets/antigravity-icon.png" width="16"/>
-           <span>Antigravity</span>
-          </li>
-          <li class="native-source" data-agent="codex">
-           <img alt="" height="16" src="/assets/codex-icon.png" width="16"/>
-           <span>Codex</span>
-          </li>
-          <li class="native-source" data-agent="dsh">
-           <img alt="" height="16" src="/assets/dsh-icon.png" width="16"/>
-           <span>DSH<span class="sr-only">（DeepSeek Harness）</span></span>
-          </li>
-         </ul>
-        </div>
-        <div class="native-work-body">
-         <span aria-hidden="true" class="speech-watermark">
-         </span>
-         <p>
-          正在梳理接下来要做什么
-         </p>
-        </div>
-       </div>
+       <img loading="lazy" decoding="async" data-panel="work" alt="工作中，Antigravity、Codex 和 DSH 同时活跃" width="816" height="417" src="/assets/agentpet-1.6.4/claude-work.webp"/>
       </div>
       <h3>
-       跟上工作进度
+       工作状态
       </h3>
       <p>
-       多个助手的工作状态同时显示，及时发现需要回答或确认的时刻。
+       多个助手同时工作时，气泡会列出来源。点开详情，就能看到正在处理的任务。
       </p>
      </article>
      <article class="feature">
       <div class="feature-demo">
-       <div aria-label="Codex 剩余额度示例" class="native-panel native-quota" role="group">
-        <div class="native-heading">
-         <img alt="" class="native-icon" height="16" src="/assets/codex-icon.png" width="16"/>
-         <strong>
-          Codex 剩余额度
-         </strong>
-         <span class="native-badge">
-          Plus
-         </span>
-         <span aria-hidden="true" class="native-refresh">
-          ↻
-         </span>
-        </div>
-        <div class="native-quota-row">
-         <span>
-          5 小时
-         </span>
-         <small>
-          2 小时后重置
-         </small>
-         <b>
-          68%
-         </b>
-        </div>
-        <meter aria-label="5 小时剩余额度，示例 68%" class="native-meter" max="100" min="0" value="68">
-         68%
-        </meter>
-        <div class="native-quota-row">
-         <span>
-          每周
-         </span>
-         <small>
-          明天 14:00 重置
-         </small>
-         <b>
-          84%
-         </b>
-        </div>
-        <meter aria-label="每周剩余额度，示例 84%" class="native-meter" max="100" min="0" value="84">
-         84%
-        </meter>
-       </div>
+       <img loading="lazy" decoding="async" data-panel="quota" alt="Codex 额度票夹示例，5 小时剩余 68%，每周剩余 84%" width="816" height="437" src="/assets/agentpet-1.6.4/claude-quota.webp"/>
       </div>
       <h3>
-       随手查看额度
+       Codex 剩余额度
       </h3>
       <p>
-       在桌面查看本地记录的 Codex 使用额度，支持手动刷新。
+       对照 5 小时与每周额度。某一项偏低时，对应票根会显示提醒。
       </p>
      </article>
      <article class="feature">
       <div class="feature-demo">
-       <div aria-label="DeepSeek 官方余额示例" class="native-panel native-balance" role="group">
-        <div class="native-heading">
-         <div class="native-title">
-          <img alt="" class="native-icon" height="16" src="/assets/dsh-icon.png" width="16"/>
-          <strong>DeepSeek 官方余额</strong>
-          <span class="native-badge">官方</span>
-         </div>
-         <small class="native-update">14:32 更新</small>
-         <span aria-hidden="true" class="native-refresh">
-          ↻
-         </span>
-        </div>
-        <div class="native-total">
-         <span>
-          人民币 CNY · DSH 宿主
-         </span>
-         <b>
-          ¥ 13.25
-         </b>
-        </div>
-        <p class="native-breakdown">
-         充值: ¥ 10.00　赠金: ¥ 3.25
-        </p>
-        <a class="native-pricing" href="https://api-docs.deepseek.com/quick_start/pricing/">
-         官方计费 ↗
-         <span class="sr-only">（DeepSeek API）</span>
-        </a>
-       </div>
+       <img loading="lazy" decoding="async" data-panel="balance" alt="DeepSeek 余额示例，共 13.25 元，其中充值 10 元、赠金 3.25 元" width="816" height="498" src="/assets/agentpet-1.6.4/claude-balance.webp"/>
       </div>
       <h3>
-       关注剩余余额
+       DeepSeek 余额
       </h3>
       <p>
        通过本机 DeepSeek Harness 查看人民币余额与明细，低于设定阈值时提醒。
@@ -271,100 +234,7 @@
      </article>
     </div>
     <p class="demo-note">
-     按桌宠面板样式展示，额度、余额与时间均为示例数据。
-    </p>
-   </section>
-   <section aria-labelledby="characters" class="section">
-    <div class="section-heading">
-     <h2 id="characters">
-      选一位，你的桌面搭档。
-     </h2>
-     <p>
-      点击角色，切换首屏立绘预览。
-     </p>
-    </div>
-    <fieldset class="character-grid">
-     <legend class="sr-only">
-      选择桌宠角色
-     </legend>
-     <label class="character" data-character="claude">
-      <input aria-controls="hero-pet" checked="" class="character-input" name="character" type="radio" value="claude"/>
-      <span aria-hidden="true" class="character-selected">
-       ✓
-      </span>
-      <span class="character-portrait">
-       <img alt="" height="384" loading="lazy" src="/assets/claude.png" width="384"/>
-      </span>
-      <strong>
-       小克
-      </strong>
-      <span class="character-family">
-       Claude 娘
-      </span>
-     </label>
-     <label class="character" data-character="dragon">
-      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="dragon"/>
-      <span aria-hidden="true" class="character-selected">
-       ✓
-      </span>
-      <span class="character-portrait">
-       <img alt="" height="384" loading="lazy" src="/assets/dragon.png" width="384"/>
-      </span>
-      <strong>
-       白龙
-      </strong>
-      <span class="character-family">
-       GPT 娘
-      </span>
-     </label>
-     <label class="character" data-character="gemini">
-      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="gemini"/>
-      <span aria-hidden="true" class="character-selected">
-       ✓
-      </span>
-      <span class="character-portrait">
-       <img alt="" height="384" loading="lazy" src="/assets/gemini.png" width="384"/>
-      </span>
-      <strong>
-       双子
-      </strong>
-      <span class="character-family">
-       Gemini 娘
-      </span>
-     </label>
-     <label class="character" data-character="deepseek">
-      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="deepseek"/>
-      <span aria-hidden="true" class="character-selected">
-       ✓
-      </span>
-      <span class="character-portrait">
-       <img alt="" height="384" loading="lazy" src="/assets/deepseek.png" width="384"/>
-      </span>
-      <strong>
-       大肥鱼
-      </strong>
-      <span class="character-family">
-       DeepSeek 娘
-      </span>
-     </label>
-     <label class="character" data-character="zcode">
-      <input aria-controls="hero-pet" class="character-input" name="character" type="radio" value="zcode"/>
-      <span aria-hidden="true" class="character-selected">
-       ✓
-      </span>
-      <span class="character-portrait">
-       <img alt="" height="384" loading="lazy" src="/assets/zcode.png" width="384"/>
-      </span>
-      <strong>
-       智谱娘
-      </strong>
-      <span class="character-family">
-       ZCode
-      </span>
-     </label>
-    </fieldset>
-    <p aria-atomic="true" aria-live="polite" class="character-choice" role="status">
-     当前首屏预览为小克。
+     画面来自 AgentPet v1.6.4，任务、额度和余额使用示例数据。
     </p>
    </section>
    <section aria-labelledby="setup" class="setup">
@@ -461,7 +331,7 @@
     </a>
    </span>
   </footer>
-  <script defer="" src="/assets/pet-preview.js">
+  <script defer="" src="/assets/pet-preview.js?v=164-preview">
   </script>
  </body>
 </html>
