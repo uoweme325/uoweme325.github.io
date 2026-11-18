@@ -119,12 +119,16 @@ function getPanelSrc(role, panel, stampStyle, quotaState) {
   }
   if (panel === 'quota') {
     if (quotaState === 'low') {
-      return `/assets/agentpet-1.6.4/${role}-quota-low.webp?v=provider-icons`;
+      return `/assets/agentpet-1.6.4/${role}-quota-low.webp?v=quota-themes`;
+    }
+    if (quotaState === 'pro') {
+      const suffix = stampStyle === 'lineart' ? '-lineart' : '';
+      return `/assets/agentpet-1.6.4/${role}-quota-pro${suffix}.webp?v=quota-themes`;
     }
     const suffix = stampStyle === 'lineart' ? '-quota-lineart' : '-quota';
     return `/assets/agentpet-1.6.4/${role}${suffix}.webp?v=provider-icons`;
   }
-  return `/assets/agentpet-1.6.4/${role}-${panel}.webp?v=provider-icons`;
+  return `/assets/agentpet-1.6.4/${role}-${panel}.webp?v=quota-themes`;
 }
 
 function preloadUrls(urls) {
@@ -200,7 +204,9 @@ function updatePreviewPanels(role, name) {
   for (const preview of previews) {
     preview.src = getPanelSrc(role, preview.dataset.panel, stampStyle, quotaState);
     if (preview.dataset.panel === 'quota') {
-      preview.alt = quotaState === 'low'
+      preview.alt = quotaState === 'pro'
+        ? `${name} Pro 重置卡票夹，剩余 2 张，每周剩余 42%`
+        : quotaState === 'low'
         ? `${name}低额度票夹示例，5 小时剩余 25% 偏低，每周剩余 10% 紧张`
         : `${name}额度票夹示例，5 小时剩余 68%，每周剩余 84%（${stampStyle === 'lineart' ? '简笔画' : '正常'}）`;
     }

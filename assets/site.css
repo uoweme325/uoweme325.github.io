@@ -876,7 +876,7 @@ details p { max-width: 50rem; color: var(--muted); font-size: 0.875rem; margin: 
 .pill-switch {
   position: relative;
   display: inline-grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--choices, 2), minmax(0, 1fr));
   align-items: center;
   gap: 0;
   margin: 0;
@@ -893,6 +893,7 @@ details p { max-width: 50rem; color: var(--muted); font-size: 0.875rem; margin: 
   backdrop-filter: blur(1.25rem) saturate(165%);
   max-inline-size: 100%;
 }
+.quota-switch { --choices: 3; }
 @supports selector(:has(*)) {
   .pill-switch::before {
     content: '';
@@ -901,7 +902,7 @@ details p { max-width: 50rem; color: var(--muted); font-size: 0.875rem; margin: 
     top: .25rem;
     bottom: .25rem;
     left: .25rem;
-    width: calc(50% - .25rem);
+    width: calc((100% - .5rem) / var(--choices, 2));
     border-radius: 999px;
     border: 0.0625rem solid #fff;
     background: linear-gradient(180deg, #ffffff 0%, #ffffffeb 100%);
@@ -913,8 +914,11 @@ details p { max-width: 50rem; color: var(--muted); font-size: 0.875rem; margin: 
     pointer-events: none;
     z-index: 0;
   }
-  .pill-switch:has(.pill-option:last-of-type input:checked)::before {
+  .pill-switch:has(.pill-option:nth-of-type(2) input:checked)::before {
     transform: translateX(100%);
+  }
+  .quota-switch:has(.pill-option:nth-of-type(3) input:checked)::before {
+    transform: translateX(200%);
   }
 }
 @supports not selector(:has(*)) {
