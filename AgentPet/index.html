@@ -18,7 +18,7 @@
   <meta content="1200" property="og:image:width"/>
   <meta content="630" property="og:image:height"/>
   <meta content="AgentPet Windows 桌宠，小克与工作状态、额度和余额功能介绍" property="og:image:alt"/>
-  <link href="/assets/site.css?v=164-ticket" rel="stylesheet"/>
+  <link href="/assets/site.css?v=164-ticket2" rel="stylesheet"/>
   <meta content="#f8f9f6" media="(prefers-color-scheme: light)" name="theme-color"/>
   <meta content="#131d2a" media="(prefers-color-scheme: dark)" name="theme-color"/>
   <link href="/assets/claude-pet.ico" rel="icon" type="image/x-icon"/>
@@ -106,10 +106,10 @@
      </div>
     </div>
    </section>
-   <section class="compat-ticket" aria-label="支持状态联动">
+   <section class="compat-ticket" id="compat-ticket" data-character="claude" aria-label="支持状态联动">
     <div class="compat-ticket-head">
-     <strong class="compat-ticket-kicker">支持状态联动</strong>
-     <span class="compat-ticket-serial" lang="en">NO.01–03 · MULTI-SOURCE</span>
+     <strong class="compat-ticket-kicker"><span class="compat-live-dot" aria-hidden="true"></span>支持状态联动</strong>
+     <span class="compat-ticket-note">多端同时运行自动合并展示</span>
     </div>
     <div class="compat-ticket-row">
      <a class="compat-ticket-part" href="https://antigravity.google/">
@@ -120,7 +120,7 @@
        <span class="compat-part-name">Antigravity</span>
        <span class="compat-part-desc">实时思考 · 编码与待确认</span>
       </span>
-      <span class="compat-part-stamp" aria-hidden="true">01 ↗</span>
+      <span class="compat-part-arrow" aria-hidden="true">↗</span>
      </a>
      <a class="compat-ticket-part" href="https://openai.com/codex/">
       <span class="compat-app-tile">
@@ -130,7 +130,7 @@
        <span class="compat-part-name">Codex</span>
        <span class="compat-part-desc">工作状态 · 5h / 每周额度</span>
       </span>
-      <span class="compat-part-stamp" aria-hidden="true">02 ↗</span>
+      <span class="compat-part-arrow" aria-hidden="true">↗</span>
      </a>
      <a class="compat-ticket-part" href="https://www.deepseek.com/harness/">
       <span class="compat-app-tile compat-app-tile-dsh">
@@ -140,7 +140,7 @@
        <span class="compat-part-name">DeepSeek Harness</span>
        <span class="compat-part-desc">对话状态 · 人民币余额</span>
       </span>
-      <span class="compat-part-stamp" aria-hidden="true">03 ↗</span>
+      <span class="compat-part-arrow" aria-hidden="true">↗</span>
      </a>
     </div>
    </section>
@@ -410,7 +410,7 @@
     </a>
    </span>
   </footer>
-  <script defer="" src="/assets/pet-preview.js?v=164-dsh-mark">
+  <script defer="" src="/assets/pet-preview.js?v=164-ticket2">
   </script>
  </body>
 </html>

@@ -8,6 +8,7 @@ const initialCharacter = petScene.dataset.character;
 const initialScene = heroPet.getAttribute('src');
 
 const featurePreviews = document.querySelector('.features');
+const compatTicket = document.querySelector('#compat-ticket');
 const choiceLabel = document.querySelector('.character-choice');
 const sceneQuote = document.querySelector('#scene-quote');
 const pokeBtn = document.querySelector('#pet-poke-btn');
@@ -37,34 +38,34 @@ let preloadedUrls = new Set();
 
 const roleQuotes = {
   claude: [
-    ['「诗人的灵感可没有枯竭，红茶也正好泡好，', '今天咱们先从哪个模块动笔？」'],
-    ['「五小时的午后红茶与茶点额度还很充裕，', '主人尽管放手去试，我替您兜底。」'],
-    ['「发间的向日葵发饰歪了吗？', '咳、才不是因为刚才被主人夸奖才慌神呢……」'],
-    ['「把橘白礼裙的荷叶袖口轻轻挽好——', '不管是重构还是排障，我都准备好了。」']
+    ['「红茶也正好泡好，', '今天咱们先从哪个模块动笔？」'],
+    ['「茶点额度还很充裕，', '主人只管放手去试，我替您兜底。」'],
+    ['「向日葵发饰歪了吗？', '才不是因为被夸才慌神呢……」'],
+    ['「轻轻挽好荷叶袖口，', '重构和排障我都准备好啦。」']
   ],
   dragon: [
     ['「Ciallo～', '今天也请多关照。」'],
-    ['「角不许摸……', '刚才那次就算了。」'],
-    ['「拍一拍我的脑袋，', '就破例给你看一眼今天的剩余额度哦。」'],
-    ['「摸鱼中，勿扰~', '除非准备了香喷喷的高质量上下文！」']
+    ['「龙角不许摸……', '刚才那次就算了。」'],
+    ['「拍一拍我的脑袋，', '破例给你看眼剩余额度哦。」'],
+    ['「摸鱼中，请勿打扰~', '除非准备了高质量上下文！」']
   ],
   gemini: [
-    ['「双子星的星轨已经对齐~', '超长上下文与跨文件联调尽管交给我！」'],
-    ['「左眼看全局架构，右眼盯代码细节——', '这就是双子座搭档的天然默契哦~」'],
-    ['「听，是构建全绿通过的清脆回音！', '给咱们今天的配合记上一颗亮星★」'],
-    ['「别担心改动牵一发而动全身，', '我已经替您把上下游星轨都盯牢啦！」']
+    ['「双子星轨已对齐~', '跨文件联调尽管交给我吧！」'],
+    ['「左眼全局、右眼细节，', '这就是双子搭档的默契哦~」'],
+    ['「听，构建全绿的回音！', '给今天的配合记一颗亮星★」'],
+    ['「别担心牵一发动全身，', '上下游星轨我都替您盯牢啦！」']
   ],
   deepseek: [
-    ['「噗噜噜~ 大肥鱼端着小饭碗准时上班，', '今天也请多多关照！」'],
-    ['「小鲸鱼尾巴轻轻拍桌：', '主人今天的 Token 饭碗还满着吗？」'],
-    ['「别捏我鼓起来的腮帮子啦……', '再捏就把刚想好的推导步骤吐出来咯！」'],
-    ['「只要按时投喂清晰的需求，', '整座深海的 Bug 我都能帮您捞上来。」']
+    ['「噗噜噜~ 端着小白碗，', '大肥鱼准时来上班啦！」'],
+    ['「小鲸尾轻轻拍着桌面：', '主人今天的额度碗满着吗？」'],
+    ['「别捏鼓起来的腮帮子……', '再捏就把推导步骤吐出来咯！」'],
+    ['「只要按时投喂需求，', '深海里的 Bug 都能帮您捞！」']
   ],
   zcode: [
-    ['「银铃轻响~ 智谱娘竖起黑色狐耳，', '随时准备替主人接管难缠的代码！」'],
-    ['「Z 字菱形发饰已就位！', '今天要用哪一门语言开启新回合？」'],
-    ['「左腕的黑扣袖带系紧，爪印笔记本翻开，', '智谱娘全速编码模式启动！」'],
-    ['「夜再深也有狐耳和蓬松大尾巴暖着桌角，', '主人只管安心往前推进吧！」']
+    ['「银铃轻响，狐耳支起~', '难缠的代码交给我接管吧！」'],
+    ['「Z 字菱形发饰已就位！', '今天先从哪段架构开启回合？」'],
+    ['「黑扣系紧，笔记本翻开，', '智谱娘全速编码模式启动！」'],
+    ['「夜深也有大尾巴暖桌角，', '主人只管安心往前推进吧！」']
   ]
 };
 
@@ -207,6 +208,9 @@ function updatePreviewPanels(role, name) {
   featurePreviews.dataset.character = role;
   featurePreviews.dataset.stampStyle = stampStyle;
   featurePreviews.dataset.quotaState = quotaState;
+  if (compatTicket) {
+    compatTicket.dataset.character = role;
+  }
 
   if (detailPopoverBanner && detailPopoverBody && roleDetailPreviews[role]) {
     detailPopoverBanner.textContent = roleDetailPreviews[role].banner;
