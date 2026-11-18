@@ -93,7 +93,73 @@
     <div class="pet-scene" data-character="claude">
      <div class="scene-caption"><strong>桌宠实机预览</strong><span>v1.6.4</span></div>
      <img class="hero-capture" id="hero-pet" fetchpriority="high" data-panel="scene" alt="小克等待确认，Codex 的状态气泡位于角色上方" width="816" height="710" src="/assets/agentpet-1.6.4/claude-scene.webp"/>
-    <fieldset class="character-grid scene-choices" id="characters">
+    </div>
+   </section>
+   <div class="compat">
+    <span>
+     支持状态联动
+    </span>
+    <strong>
+     <a href="https://antigravity.google/">Antigravity</a>
+    </strong>
+    <strong>
+     <a href="https://openai.com/codex/">Codex</a>
+    </strong>
+    <strong>
+     <a href="https://www.deepseek.com/harness/">DeepSeek Harness</a>
+    </strong>
+   </div>
+   <section aria-labelledby="features" class="section">
+    <div class="section-heading">
+     <h2 id="features">
+      桌面上的三种气泡
+     </h2>
+    </div>
+    <div class="features" id="panel-examples" data-character="claude">
+     <article class="feature">
+      <div class="feature-demo">
+       <img loading="lazy" decoding="async" data-panel="work" alt="工作中，Antigravity、Codex 和 DSH 同时活跃" width="816" height="417" src="/assets/agentpet-1.6.4/claude-work.webp"/>
+      </div>
+      <h3>
+       工作状态
+      </h3>
+      <p>
+       多个助手同时工作时，气泡会列出来源。点开详情，就能看到正在处理的任务。
+      </p>
+     </article>
+     <article class="feature">
+      <div class="feature-demo">
+       <img loading="lazy" decoding="async" data-panel="quota" alt="Codex 额度票夹示例，5 小时剩余 68%，每周剩余 84%" width="816" height="437" src="/assets/agentpet-1.6.4/claude-quota.webp"/>
+      </div>
+      <h3>
+       Codex 剩余额度
+      </h3>
+      <p>
+       对照 5 小时与每周额度。某一项偏低时，对应票根会显示提醒。
+      </p>
+     </article>
+     <article class="feature">
+      <div class="feature-demo">
+       <img loading="lazy" decoding="async" data-panel="balance" alt="DeepSeek 余额示例，共 13.25 元，其中充值 10 元、赠金 3.25 元" width="816" height="498" src="/assets/agentpet-1.6.4/claude-balance.webp"/>
+      </div>
+      <h3>
+       DeepSeek 余额
+      </h3>
+      <p>
+       通过本机 DeepSeek Harness 查看人民币余额与明细，低于设定阈值时提醒。
+      </p>
+     </article>
+    </div>
+    <p class="demo-note">
+     画面来自 AgentPet v1.6.4，任务、额度和余额使用示例数据。
+    </p>
+   </section>
+   <section aria-labelledby="characters" class="section">
+    <div class="section-heading">
+     <h2 id="characters">选一位，你的桌面搭档。</h2>
+     <p>选择角色，切换上方的桌宠和气泡预览。</p>
+    </div>
+    <fieldset class="character-grid">
      <legend class="sr-only">
       切换预览角色
      </legend>
@@ -175,66 +241,6 @@
     </fieldset>
     <p aria-atomic="true" aria-live="polite" class="character-choice sr-only" role="status">
      当前预览角色为小克。
-    </p>
-    </div>
-   </section>
-   <div class="compat">
-    <span>
-     支持状态联动
-    </span>
-    <strong>
-     <a href="https://antigravity.google/">Antigravity</a>
-    </strong>
-    <strong>
-     <a href="https://openai.com/codex/">Codex</a>
-    </strong>
-    <strong>
-     <a href="https://www.deepseek.com/harness/">DeepSeek Harness</a>
-    </strong>
-   </div>
-   <section aria-labelledby="features" class="section">
-    <div class="section-heading">
-     <h2 id="features">
-      桌面上的三种气泡
-     </h2>
-    </div>
-    <div class="features" id="panel-examples" data-character="claude">
-     <article class="feature">
-      <div class="feature-demo">
-       <img loading="lazy" decoding="async" data-panel="work" alt="工作中，Antigravity、Codex 和 DSH 同时活跃" width="816" height="417" src="/assets/agentpet-1.6.4/claude-work.webp"/>
-      </div>
-      <h3>
-       工作状态
-      </h3>
-      <p>
-       多个助手同时工作时，气泡会列出来源。点开详情，就能看到正在处理的任务。
-      </p>
-     </article>
-     <article class="feature">
-      <div class="feature-demo">
-       <img loading="lazy" decoding="async" data-panel="quota" alt="Codex 额度票夹示例，5 小时剩余 68%，每周剩余 84%" width="816" height="437" src="/assets/agentpet-1.6.4/claude-quota.webp"/>
-      </div>
-      <h3>
-       Codex 剩余额度
-      </h3>
-      <p>
-       对照 5 小时与每周额度。某一项偏低时，对应票根会显示提醒。
-      </p>
-     </article>
-     <article class="feature">
-      <div class="feature-demo">
-       <img loading="lazy" decoding="async" data-panel="balance" alt="DeepSeek 余额示例，共 13.25 元，其中充值 10 元、赠金 3.25 元" width="816" height="498" src="/assets/agentpet-1.6.4/claude-balance.webp"/>
-      </div>
-      <h3>
-       DeepSeek 余额
-      </h3>
-      <p>
-       通过本机 DeepSeek Harness 查看人民币余额与明细，低于设定阈值时提醒。
-      </p>
-     </article>
-    </div>
-    <p class="demo-note">
-     画面来自 AgentPet v1.6.4，任务、额度和余额使用示例数据。
     </p>
    </section>
    <section aria-labelledby="setup" class="setup">
