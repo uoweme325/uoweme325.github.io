@@ -2,6 +2,8 @@ const choiceInputs = document.querySelectorAll('.character-input');
 const previews = document.querySelectorAll('img[data-panel]');
 const heroPet = document.querySelector('#hero-pet');
 const petScene = document.querySelector('.pet-scene');
+const initialCharacter = petScene.dataset.character;
+const initialScene = heroPet.getAttribute('src');
 
 const featurePreviews = document.querySelector('.features');
 const choiceLabel = document.querySelector('.character-choice');
@@ -31,7 +33,9 @@ for (const input of choiceInputs) {
       const card = selected.closest('.character');
       const name = card.querySelector('strong').textContent.trim();
       for (const preview of previews) {
-        preview.src = `/assets/agentpet-1.6.4/${selected.value}-${preview.dataset.panel}.webp`;
+        preview.src = preview === heroPet && selected.value === initialCharacter
+          ? initialScene
+          : `/assets/agentpet-1.6.4/${selected.value}-${preview.dataset.panel}.webp`;
       }
       heroPet.alt = `${name}等待确认，Codex 的状态气泡位于角色上方`;
       petScene.dataset.character = selected.value;
