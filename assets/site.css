@@ -622,9 +622,12 @@ details p { max-width: 50rem; color: var(--muted); font-size: 0.875rem; margin: 
 .scene-quote {
   position: relative;
   z-index: 2;
+  display: grid;
+  place-items: center;
   margin: .1rem 0 0;
   padding: .46rem .95rem;
-  max-inline-size: min(100%, 23rem);
+  inline-size: min(100%, 25rem);
+  min-block-size: 3.55rem;
   border-radius: 1.1rem;
   border: 0.0625rem solid #ffffffc9;
   background: linear-gradient(160deg, #ffffff9e 0%, #ffffff5e 100%);
@@ -637,6 +640,10 @@ details p { max-width: 50rem; color: var(--muted); font-size: 0.875rem; margin: 
   font-size: .8125rem;
   line-height: 1.48;
   text-align: center;
+  text-wrap: balance;
+}
+@container pet-preview (max-width: 22rem) {
+  .scene-quote { min-block-size: 4.8rem; }
 }
 .scene-actions {
   position: relative;
