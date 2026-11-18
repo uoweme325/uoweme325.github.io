@@ -18,7 +18,7 @@
   <meta content="1200" property="og:image:width"/>
   <meta content="630" property="og:image:height"/>
   <meta content="AgentPet Windows 桌宠，小克与工作状态、额度和余额功能介绍" property="og:image:alt"/>
-  <link href="/assets/site.css?v=164-preview" rel="stylesheet"/>
+  <link href="/assets/site.css?v=164-interactive" rel="stylesheet"/>
   <meta content="#f8f9f6" media="(prefers-color-scheme: light)" name="theme-color"/>
   <meta content="#131d2a" media="(prefers-color-scheme: dark)" name="theme-color"/>
   <link href="/assets/claude-pet.ico" rel="icon" type="image/x-icon"/>
@@ -91,8 +91,13 @@
      </p>
     </div>
     <div class="pet-scene" data-character="claude">
-     <div class="scene-caption"><strong>桌宠实机预览</strong><span>v1.6.4</span></div>
+     <div class="scene-caption"><strong>桌宠实机预览</strong><span>v1.6.4 · 可点按立绘体验手感</span></div>
      <img class="hero-capture" id="hero-pet" fetchpriority="high" data-panel="scene" alt="小克等待确认，Codex 的状态气泡位于角色上方" width="816" height="710" src="/assets/agentpet-1.6.4/claude-scene.webp?v=rest-pose"/>
+     <p class="scene-quote" id="scene-quote" aria-live="polite">点按立绘体验 Q 弹按压手感，或切换一句日常台词。</p>
+     <div class="scene-actions">
+      <button type="button" class="chip-btn" id="pet-poke-btn">点按 Q 弹 · 换一句 ↻</button>
+      <button type="button" class="chip-btn" id="sound-preview-btn">🔔 试听完成提示音</button>
+     </div>
     </div>
    </section>
    <div class="compat">
@@ -114,11 +119,35 @@
      <h2 id="features">
       桌面上的三种气泡
      </h2>
+     <div class="bubble-controls">
+      <fieldset class="pill-switch" aria-label="切换印章与底纹风格">
+       <legend class="sr-only">印章与底纹风格</legend>
+       <label class="pill-option">
+        <input type="radio" name="stamp-style" value="embossed" checked=""/>
+        <span>正常</span>
+       </label>
+       <label class="pill-option">
+        <input type="radio" name="stamp-style" value="lineart"/>
+        <span>简笔画</span>
+       </label>
+      </fieldset>
+      <fieldset class="pill-switch" aria-label="切换额度票根状态">
+       <legend class="sr-only">额度票根状态</legend>
+       <label class="pill-option">
+        <input type="radio" name="quota-state" value="normal" checked=""/>
+        <span>正常</span>
+       </label>
+       <label class="pill-option">
+        <input type="radio" name="quota-state" value="low"/>
+        <span>低额度</span>
+       </label>
+      </fieldset>
+     </div>
     </div>
-    <div class="features" id="panel-examples" data-character="claude">
+    <div class="features" id="panel-examples" data-character="claude" data-stamp-style="embossed" data-quota-state="normal">
      <article class="feature">
       <div class="feature-demo">
-       <img loading="lazy" decoding="async" data-panel="work" alt="工作中，Antigravity、Codex 和 DSH 同时活跃" width="816" height="417" src="/assets/agentpet-1.6.4/claude-work.webp"/>
+       <img decoding="async" data-panel="work" alt="工作中，Antigravity、Codex 和 DSH 同时活跃" width="816" height="417" src="/assets/agentpet-1.6.4/claude-work.webp"/>
       </div>
       <h3>
        工作状态
@@ -126,21 +155,34 @@
       <p>
        多个助手同时工作时，气泡会列出来源。点开详情，就能看到正在处理的任务。
       </p>
+      <div class="feature-action">
+       <button type="button" class="detail-trigger" popovertarget="work-detail-popover">查看任务详情浮窗 ↗</button>
+       <div id="work-detail-popover" popover="auto" class="detail-popover" role="region" aria-label="任务详情预览">
+        <div class="detail-card-head">
+         <strong class="detail-card-title">任务详情</strong>
+         <span class="detail-source-pill">Antigravity · 工作中</span>
+        </div>
+        <div class="detail-card-banner" id="detail-popover-banner">状态提示：正在执行多助手协同步骤</div>
+        <p class="detail-card-body" id="detail-popover-body">已按典籍上的蓝图动笔改代码啦~ 当前正在核对 UI 布局与跨目录改动，同源会话运行平稳。</p>
+        <div class="detail-card-foot">同源会话：1 个 · 另有 Codex、DSH 同时活跃</div>
+       </div>
+      </div>
      </article>
      <article class="feature">
       <div class="feature-demo">
-       <img loading="lazy" decoding="async" data-panel="quota" alt="Codex 额度票夹示例，5 小时剩余 68%，每周剩余 84%" width="816" height="437" src="/assets/agentpet-1.6.4/claude-quota.webp"/>
+       <img decoding="async" data-panel="quota" alt="Codex 额度票夹示例，5 小时剩余 68%，每周剩余 84%" width="816" height="437" src="/assets/agentpet-1.6.4/claude-quota.webp"/>
       </div>
       <h3>
        Codex 剩余额度
       </h3>
       <p>
-       对照 5 小时与每周额度。某一项偏低时，对应票根会显示提醒。
+       对照 5 小时与每周额度。某一项偏低时，印章会自动让位给「偏低 / 紧张」提醒。
       </p>
+      <div class="feature-action" aria-hidden="true"></div>
      </article>
      <article class="feature">
       <div class="feature-demo">
-       <img loading="lazy" decoding="async" data-panel="balance" alt="DeepSeek 余额示例，共 13.25 元，其中充值 10 元、赠金 3.25 元" width="816" height="498" src="/assets/agentpet-1.6.4/claude-balance.webp"/>
+       <img decoding="async" data-panel="balance" alt="DeepSeek 余额示例，共 13.25 元，其中充值 10 元、赠金 3.25 元" width="816" height="498" src="/assets/agentpet-1.6.4/claude-balance.webp"/>
       </div>
       <h3>
        DeepSeek 余额
@@ -148,10 +190,11 @@
       <p>
        通过本机 DeepSeek Harness 查看人民币余额与明细，低于设定阈值时提醒。
       </p>
+      <div class="feature-action" aria-hidden="true"></div>
      </article>
     </div>
-    <p class="demo-note">
-     画面来自 AgentPet v1.6.4，任务、额度和余额使用示例数据。
+    <p class="demo-note" id="demo-note">
+     画面来自 AgentPet v1.6.4，支持右上角切换「正常 / 简笔画」印章底纹与「正常 / 低额度」票根状态，数值为示例数据。
     </p>
    </section>
    <section aria-labelledby="characters" class="section">
@@ -296,7 +339,7 @@
       v1.6.4 更新了什么？
      </summary>
      <p>
-      本次新增五角色 Codex 额度票夹，以及可切换的动物印章与状态底纹。DeepSeek 余额卡也更新了排版，刷新更易点，大字号更易读。
+      本次新增五角色 Codex 额度票夹，支持「正常 / 简笔画」双风格动物印章与状态底纹切换；加入了左键按压蓄力、松手 Q 弹回弹的物理手感与按键音效，以及 Antigravity、Codex、DSH 三源任务完成提示音（支持夜间免打扰时段与隐藏静音）。DeepSeek 余额卡也同步优化了排版，大字号更易读。
       <a class="text-link" href="https://github.com/uoweme325/AgentPet/releases/tag/v1.6.4">
        查看完整更新说明 ↗
       </a>
@@ -337,7 +380,7 @@
     </a>
    </span>
   </footer>
-  <script defer="" src="/assets/pet-preview.js?v=164-rest-pose">
+  <script defer="" src="/assets/pet-preview.js?v=164-interactive">
   </script>
  </body>
 </html>
