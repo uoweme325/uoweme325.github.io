@@ -37,34 +37,34 @@ let preloadedUrls = new Set();
 
 const roleQuotes = {
   claude: [
-    '诗人的灵感可没有枯竭，红茶也正好泡好，今天咱们先从哪个模块动笔？',
-    '五小时的午后红茶与茶点额度还很充裕，主人尽管放手去试，我替您兜底。',
-    '发间的向日葵发饰歪了吗？咳、才不是因为刚才被主人夸奖才慌神呢……',
-    '把橘白礼裙的荷叶袖口轻轻挽好——嗯，不管是重构还是排障，我都准备好了。'
+    ['「诗人的灵感可没有枯竭，红茶也正好泡好，', '今天咱们先从哪个模块动笔？」'],
+    ['「五小时的午后红茶与茶点额度还很充裕，', '主人尽管放手去试，我替您兜底。」'],
+    ['「发间的向日葵发饰歪了吗？', '咳、才不是因为刚才被主人夸奖才慌神呢……」'],
+    ['「把橘白礼裙的荷叶袖口轻轻挽好——', '不管是重构还是排障，我都准备好了。」']
   ],
   dragon: [
-    'Ciallo～ 今天也请多关照。',
-    '角不许摸……刚才那次就算了。',
-    '拍一拍我的脑袋，就破例给你看一眼今天的剩余额度哦。',
-    '摸鱼中，勿扰~ 除非主人准备了香喷喷的高质量上下文投喂我！'
+    ['「Ciallo～', '今天也请多关照。」'],
+    ['「角不许摸……', '刚才那次就算了。」'],
+    ['「拍一拍我的脑袋，', '就破例给你看一眼今天的剩余额度哦。」'],
+    ['「摸鱼中，勿扰~', '除非准备了香喷喷的高质量上下文！」']
   ],
   gemini: [
-    '双子星的星轨已经对齐~ 无论是超长上下文还是跨文件联调，尽管交给我吧！',
-    '左眼看全局架构，右眼盯代码细节——这就是双子座搭档的天然默契哦~',
-    '听，是构建全绿通过的清脆回音！给咱们今天的配合记上一颗亮星★',
-    '别担心改动牵一发而动全身，我已经替您把上下游的星轨依赖都盯牢啦！'
+    ['「双子星的星轨已经对齐~', '超长上下文与跨文件联调尽管交给我！」'],
+    ['「左眼看全局架构，右眼盯代码细节——', '这就是双子座搭档的天然默契哦~」'],
+    ['「听，是构建全绿通过的清脆回音！', '给咱们今天的配合记上一颗亮星★」'],
+    ['「别担心改动牵一发而动全身，', '我已经替您把上下游星轨都盯牢啦！」']
   ],
   deepseek: [
-    '噗噜噜~ 大肥鱼今天也端着小饭碗准时上班啦，请多关照！',
-    '小鲸鱼尾巴轻轻拍桌：主人今天的 Token 饭碗还满着吗？',
-    '别捏我鼓起来的腮帮子啦……再捏就把刚想好的推导步骤吐出来咯！',
-    '只要按时投喂清晰的需求，哪怕整座深海的 Bug 我都能帮您捞上来。'
+    ['「噗噜噜~ 大肥鱼端着小饭碗准时上班，', '今天也请多多关照！」'],
+    ['「小鲸鱼尾巴轻轻拍桌：', '主人今天的 Token 饭碗还满着吗？」'],
+    ['「别捏我鼓起来的腮帮子啦……', '再捏就把刚想好的推导步骤吐出来咯！」'],
+    ['「只要按时投喂清晰的需求，', '整座深海的 Bug 我都能帮您捞上来。」']
   ],
   zcode: [
-    '银铃轻响~ 智谱娘正竖起黑色狐耳，随时准备替主人接管难缠的代码！',
-    'Z 字菱形发饰已就位！今天要用哪一门语言和架构开启新回合？',
-    '左腕的黑扣袖带系紧，爪印笔记本翻开，智谱娘全速编码模式启动！',
-    '夜再深也有狐耳和蓬松大尾巴暖着桌角，主人只管安心往前推进吧！'
+    ['「银铃轻响~ 智谱娘竖起黑色狐耳，', '随时准备替主人接管难缠的代码！」'],
+    ['「Z 字菱形发饰已就位！', '今天要用哪一门语言开启新回合？」'],
+    ['「左腕的黑扣袖带系紧，爪印笔记本翻开，', '智谱娘全速编码模式启动！」'],
+    ['「夜再深也有狐耳和蓬松大尾巴暖着桌角，', '主人只管安心往前推进吧！」']
   ]
 };
 
@@ -214,14 +214,25 @@ function updatePreviewPanels(role, name) {
   }
 }
 
+const quoteLeadEl = sceneQuote?.querySelector('.quote-lead');
+const quoteTailEl = sceneQuote?.querySelector('.quote-tail');
+
+function setSceneQuote(lead, tail) {
+  if (!sceneQuote) return;
+  if (quoteLeadEl && quoteTailEl) {
+    quoteLeadEl.textContent = lead;
+    quoteTailEl.textContent = tail;
+  } else {
+    sceneQuote.textContent = `${lead}${tail}`;
+  }
+}
+
 function advanceCharacterQuote(role) {
   const list = roleQuotes[role] || roleQuotes.claude;
   const idx = quoteIndices[role] || 0;
-  const text = list[idx % list.length];
+  const [lead, tail] = list[idx % list.length];
   quoteIndices[role] = (idx + 1) % list.length;
-  if (sceneQuote) {
-    sceneQuote.textContent = `「${text}」`;
-  }
+  setSceneQuote(lead, tail);
 }
 
 function triggerBouncePose(withSound = true) {
@@ -329,9 +340,7 @@ if (soundPreviewBtn) {
   soundPreviewBtn.addEventListener('click', () => {
     soundPreviewBtn.dataset.playing = 'true';
     playPreviewSound('task_complete.wav');
-    if (sceneQuote) {
-      sceneQuote.textContent = '已播放 v1.6.4 任务完成提示音（客户端支持夜间免打扰时段与隐藏静音）。';
-    }
+    setSceneQuote('已播放 v1.6.4 任务完成提示音，', '客户端支持免打扰与隐藏静音。');
     window.setTimeout(() => {
       delete soundPreviewBtn.dataset.playing;
     }, 900);
