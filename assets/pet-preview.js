@@ -153,9 +153,30 @@ function preloadRoleAssets(role, includeVariants = false) {
   preloadUrls(urls);
 }
 
+const MIN_PRESS_RELEASE_MS = 145;
 const audioCache = {};
+let isPetPressed = false;
+let lastPressAt = 0;
+let releaseTimer = 0;
+
+function stopPreviewSound(file) {
+  const audio = audioCache[file];
+  if (!audio) return;
+  try {
+    audio.pause();
+    audio.currentTime = 0;
+  } catch {
+    // Ignore media state errors.
+  }
+}
+
 function playPreviewSound(file) {
   try {
+    if (file === 'press.wav') {
+      stopPreviewSound('release.wav');
+    } else if (file === 'release.wav') {
+      stopPreviewSound('press.wav');
+    }
     let audio = audioCache[file];
     if (!audio) {
       audio = new Audio(`/assets/agentpet-1.6.4/${file}`);
@@ -230,35 +251,77 @@ petScene.addEventListener('pointerleave', () => {
   petScene.style.removeProperty('--light-y');
 });
 
-heroPet.addEventListener('pointerdown', event => {
-  if (event.button !== 0 && event.pointerType === 'mouse') return;
+function startPetPress() {
+  if (releaseTimer) {
+    window.clearTimeout(releaseTimer);
+    releaseTimer = 0;
+  }
+  isPetPressed = true;
+  lastPressAt = performance.now();
   heroPet.classList.remove('is-bouncing');
   heroPet.classList.add('is-pressing');
   playPreviewSound('press.wav');
+}
+
+function finishPetPress(withSound = true) {
+  if (!isPetPressed) return;
+  isPetPressed = false;
+  const elapsed = performance.now() - lastPressAt;
+  const remaining = Math.max(0, MIN_PRESS_RELEASE_MS - elapsed);
+  if (remaining > 0) {
+    releaseTimer = window.setTimeout(() => {
+      releaseTimer = 0;
+      triggerBouncePose(withSound);
+    }, remaining);
+    return;
+  }
+  triggerBouncePose(withSound);
+}
+
+function cancelPetPress() {
+  if (releaseTimer) {
+    window.clearTimeout(releaseTimer);
+    releaseTimer = 0;
+  }
+  isPetPressed = false;
+  heroPet.classList.remove('is-pressing');
+}
+
+heroPet.addEventListener('pointerdown', event => {
+  if (event.button !== 0 && event.pointerType === 'mouse') return;
+  startPetPress();
 });
 
 heroPet.addEventListener('pointerup', () => {
-  if (!heroPet.classList.contains('is-pressing')) return;
-  triggerBouncePose(true);
+  finishPetPress(true);
 });
 
-heroPet.addEventListener('pointercancel', () => {
-  heroPet.classList.remove('is-pressing');
-});
+heroPet.addEventListener('pointercancel', cancelPetPress);
 
 heroPet.addEventListener('pointerleave', () => {
-  if (heroPet.classList.contains('is-pressing')) {
-    heroPet.classList.remove('is-pressing');
+  if (isPetPressed) {
+    finishPetPress(true);
   }
 });
 
 if (pokeBtn) {
-  pokeBtn.addEventListener('click', () => {
-    heroPet.classList.add('is-pressing');
-    playPreviewSound('press.wav');
-    window.setTimeout(() => {
-      triggerBouncePose(true);
-    }, 80);
+  pokeBtn.addEventListener('pointerdown', event => {
+    if (event.button !== 0 && event.pointerType === 'mouse') return;
+    startPetPress();
+  });
+  pokeBtn.addEventListener('pointerup', () => {
+    finishPetPress(true);
+  });
+  pokeBtn.addEventListener('pointercancel', cancelPetPress);
+  pokeBtn.addEventListener('pointerleave', () => {
+    if (isPetPressed) {
+      finishPetPress(true);
+    }
+  });
+  pokeBtn.addEventListener('click', event => {
+    if (event.detail !== 0) return;
+    startPetPress();
+    finishPetPress(true);
   });
 }
 
@@ -267,7 +330,7 @@ if (soundPreviewBtn) {
     soundPreviewBtn.dataset.playing = 'true';
     playPreviewSound('task_complete.wav');
     if (sceneQuote) {
-      sceneQuote.textContent = '🔔 已播放 v1.6.4 任务完成提示音（客户端支持夜间免打扰时段与隐藏静音）。';
+      sceneQuote.textContent = '已播放 v1.6.4 任务完成提示音（客户端支持夜间免打扰时段与隐藏静音）。';
     }
     window.setTimeout(() => {
       delete soundPreviewBtn.dataset.playing;
