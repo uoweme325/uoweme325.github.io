@@ -111,20 +111,20 @@ function getPanelSrc(role, panel, stampStyle, quotaState) {
   if (panel === 'scene') {
     return role === initialCharacter
       ? initialScene
-      : `/assets/agentpet-1.6.4/${role}-scene.webp`;
+      : `/assets/agentpet-1.6.4/${role}-scene.webp?v=provider-icons`;
   }
   if (panel === 'work') {
     const suffix = stampStyle === 'lineart' ? '-work-lineart' : '-work';
-    return `/assets/agentpet-1.6.4/${role}${suffix}.webp?v=dsh-mark`;
+    return `/assets/agentpet-1.6.4/${role}${suffix}.webp?v=provider-icons`;
   }
   if (panel === 'quota') {
     if (quotaState === 'low') {
-      return `/assets/agentpet-1.6.4/${role}-quota-low.webp`;
+      return `/assets/agentpet-1.6.4/${role}-quota-low.webp?v=provider-icons`;
     }
     const suffix = stampStyle === 'lineart' ? '-quota-lineart' : '-quota';
-    return `/assets/agentpet-1.6.4/${role}${suffix}.webp`;
+    return `/assets/agentpet-1.6.4/${role}${suffix}.webp?v=provider-icons`;
   }
-  return `/assets/agentpet-1.6.4/${role}-${panel}.webp?v=dsh-mark`;
+  return `/assets/agentpet-1.6.4/${role}-${panel}.webp?v=provider-icons`;
 }
 
 function preloadUrls(urls) {
@@ -141,14 +141,14 @@ function preloadRoleAssets(role, includeVariants = false) {
   const urls = [
     getPanelSrc(role, 'scene', 'embossed', 'normal'),
     getPanelSrc(role, 'work', 'embossed', 'normal'),
-    `/assets/agentpet-1.6.4/${role}-quota.webp`,
+    getPanelSrc(role, 'quota', 'embossed', 'normal'),
     getPanelSrc(role, 'balance', 'embossed', 'normal')
   ];
   if (includeVariants) {
     urls.push(
       getPanelSrc(role, 'work', 'lineart', 'normal'),
-      `/assets/agentpet-1.6.4/${role}-quota-lineart.webp`,
-      `/assets/agentpet-1.6.4/${role}-quota-low.webp`
+      getPanelSrc(role, 'quota', 'lineart', 'normal'),
+      getPanelSrc(role, 'quota', 'embossed', 'low')
     );
   }
   preloadUrls(urls);
