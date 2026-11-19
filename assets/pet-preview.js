@@ -9,24 +9,33 @@ const initialScene = heroPet.getAttribute('src');
 
 const featurePreviews = document.querySelector('.features');
 const compatTicket = document.querySelector('#compat-ticket');
+const setupCard = document.querySelector('#setup-card');
+const rosterButtons = document.querySelectorAll('.roster-btn');
 const choiceLabel = document.querySelector('.character-choice');
 const sceneQuote = document.querySelector('#scene-quote');
 const pokeBtn = document.querySelector('#pet-poke-btn');
 const soundPreviewBtn = document.querySelector('#sound-preview-btn');
 const detailPopover = document.querySelector('#work-detail-popover');
-const detailTrigger = document.querySelector('.detail-trigger');
+const detailTrigger = document.querySelector('.detail-trigger[popovertarget="work-detail-popover"]');
+const balancePopover = document.querySelector('#balance-detail-popover');
+const balanceTrigger = document.querySelector('.balance-trigger');
+const quotaCycleBtn = document.querySelector('#quota-cycle-btn');
 const detailPopoverBanner = document.querySelector('#detail-popover-banner');
 const detailPopoverBody = document.querySelector('#detail-popover-body');
 
-if (detailPopover && detailTrigger) {
-  detailPopover.addEventListener('beforetoggle', event => {
+function bindPopoverFallback(popover, trigger, alignRight = false) {
+  if (!popover || !trigger) return;
+  popover.addEventListener('beforetoggle', event => {
     if (event.newState !== 'open') return;
     if (window.CSS && CSS.supports('position-area: bottom')) return;
-    const rect = detailTrigger.getBoundingClientRect();
-    detailPopover.style.top = `${rect.bottom + window.scrollY + 8}px`;
-    detailPopover.style.left = `${Math.max(16, Math.min(rect.left + window.scrollX, window.innerWidth - 340))}px`;
+    const rect = trigger.getBoundingClientRect();
+    popover.style.top = `${rect.bottom + window.scrollY + 8}px`;
+    const preferredLeft = alignRight ? rect.right + window.scrollX - 320 : rect.left + window.scrollX;
+    popover.style.left = `${Math.max(16, Math.min(preferredLeft, window.innerWidth - 340))}px`;
   });
 }
+bindPopoverFallback(detailPopover, detailTrigger, false);
+bindPopoverFallback(balancePopover, balanceTrigger, false);
 
 const interactiveLight = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -218,6 +227,20 @@ function updatePreviewPanels(role, name) {
   featurePreviews.dataset.quotaState = quotaState;
   if (compatTicket) {
     compatTicket.dataset.character = role;
+  }
+  if (setupCard) {
+    setupCard.dataset.character = role;
+  }
+  for (const btn of rosterButtons) {
+    btn.setAttribute('aria-pressed', String(btn.dataset.character === role));
+  }
+  if (quotaCycleBtn) {
+    const nextLabel = quotaState === 'normal'
+      ? '体验低额度变色 ↻'
+      : quotaState === 'low'
+      ? '看看 Pro 重置卡 ↻'
+      : '切回正常额度 ↻';
+    quotaCycleBtn.textContent = nextLabel;
   }
 
   if (detailPopoverBanner && detailPopoverBody && roleDetailPreviews[role]) {
@@ -417,6 +440,33 @@ function handleBubbleVariantChange() {
   } else {
     updateDOM();
   }
+}
+
+for (const btn of rosterButtons) {
+  const role = btn.dataset.character;
+  btn.addEventListener('pointerenter', () => preloadRoleAssets(role, false), { once: true });
+  btn.addEventListener('click', () => {
+    const targetInput = document.querySelector(`.character-input[value="${role}"]`);
+    if (targetInput && !targetInput.checked) {
+      targetInput.checked = true;
+      targetInput.dispatchEvent(new Event('change', { bubbles: true }));
+    } else {
+      triggerBouncePose(true);
+    }
+  });
+}
+
+if (quotaCycleBtn) {
+  const order = ['normal', 'low', 'pro'];
+  quotaCycleBtn.addEventListener('click', () => {
+    const current = getSelectedQuotaState();
+    const next = order[(order.indexOf(current) + 1) % order.length];
+    const nextInput = document.querySelector(`input[name="quota-state"][value="${next}"]`);
+    if (nextInput) {
+      nextInput.checked = true;
+      nextInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  });
 }
 
 for (const input of [...stampInputs, ...quotaInputs]) {

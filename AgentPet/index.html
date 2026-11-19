@@ -18,7 +18,7 @@
   <meta content="1200" property="og:image:width"/>
   <meta content="630" property="og:image:height"/>
   <meta content="AgentPet Windows 桌宠，小克与工作状态、额度和余额功能介绍" property="og:image:alt"/>
-  <link href="/assets/site.css?v=165-design" rel="stylesheet"/>
+  <link href="/assets/site.css?v=165-polish2" rel="stylesheet"/>
   <meta content="#f8f9f6" media="(prefers-color-scheme: light)" name="theme-color"/>
   <meta content="#131d2a" media="(prefers-color-scheme: dark)" name="theme-color"/>
   <link href="/assets/claude-pet.ico" rel="icon" type="image/x-icon"/>
@@ -29,12 +29,7 @@
   </a>
   <header class="wrap site-nav">
    <a class="brand" href="/">
-    <span aria-hidden="true" class="brand-mark">
-    </span>
-    uoweme325
-    <span class="soft">
-     .
-    </span>
+    <span aria-hidden="true" class="brand-mark"></span>uoweme325<span class="soft">.</span>
    </a>
    <nav aria-label="主要" class="nav-links">
     <a href="/#projects">
@@ -54,12 +49,7 @@
      <p class="eyebrow">
       WINDOWS 桌面小搭档
      </p>
-     <h1 class="latin" id="pet-title">
-      AgentPet
-      <span class="soft">
-       .
-      </span>
-     </h1>
+     <h1 class="latin" id="pet-title">AgentPet<span class="soft">.</span></h1>
      <p class="tagline">
       你专心写代码，
       <br/>
@@ -95,12 +85,29 @@
        <span>点按 Q 弹 · 换一句</span>
        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
       </button>
-      <button type="button" class="chip-btn" id="sound-preview-btn">
-       <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-       <span>试听完成提示音</span>
-      </button>
+       <button type="button" class="chip-btn" id="sound-preview-btn">
+        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span>试听完成提示音</span>
+       </button>
+      </div>
+      <div class="scene-roster" role="group" aria-label="快速切换预览角色">
+       <button type="button" class="roster-btn" data-character="claude" aria-pressed="true" title="小克 · Claude娘">
+        <img src="/assets/claude.png" alt="小克" width="64" height="64"/>
+       </button>
+       <button type="button" class="roster-btn" data-character="dragon" aria-pressed="false" title="白龙 · GPT娘">
+        <img src="/assets/dragon.png" alt="白龙" width="64" height="64"/>
+       </button>
+       <button type="button" class="roster-btn" data-character="gemini" aria-pressed="false" title="双子 · Gemini娘">
+        <img src="/assets/gemini.png" alt="双子" width="64" height="64"/>
+       </button>
+       <button type="button" class="roster-btn" data-character="deepseek" aria-pressed="false" title="大肥鱼 · DeepSeek娘">
+        <img src="/assets/deepseek.png" alt="大肥鱼" width="64" height="64"/>
+       </button>
+       <button type="button" class="roster-btn" data-character="zcode" aria-pressed="false" title="智谱娘 · GLM娘">
+        <img src="/assets/zcode.png" alt="智谱娘" width="64" height="64"/>
+       </button>
+      </div>
      </div>
-    </div>
    </section>
    <section class="compat-ticket" id="compat-ticket" data-character="claude" aria-label="支持状态联动">
     <div class="compat-ticket-head">
@@ -146,32 +153,38 @@
       桌面上的三种气泡
      </h2>
      <div class="bubble-controls">
-      <fieldset class="pill-switch" aria-label="切换印章与底纹风格">
-       <legend class="sr-only">印章与底纹风格</legend>
-       <label class="pill-option">
-        <input type="radio" name="stamp-style" value="embossed" checked=""/>
-        <span>正常</span>
-       </label>
-       <label class="pill-option">
-        <input type="radio" name="stamp-style" value="lineart"/>
-        <span>简笔画</span>
-       </label>
-      </fieldset>
-      <fieldset class="pill-switch quota-switch" aria-label="切换额度票根状态">
-       <legend class="sr-only">额度票根状态</legend>
-       <label class="pill-option">
-        <input type="radio" name="quota-state" value="normal" checked=""/>
-        <span>正常</span>
-       </label>
-       <label class="pill-option">
-        <input type="radio" name="quota-state" value="low"/>
-        <span>低额度</span>
-       </label>
-       <label class="pill-option">
-        <input type="radio" name="quota-state" value="pro"/>
-        <span>Pro 重置卡</span>
-       </label>
-      </fieldset>
+      <div class="control-group">
+       <span class="control-label" aria-hidden="true">印章</span>
+       <fieldset class="pill-switch" aria-label="切换印章与底纹风格">
+        <legend class="sr-only">印章与底纹风格</legend>
+        <label class="pill-option">
+         <input type="radio" name="stamp-style" value="embossed" checked=""/>
+         <span>压纹</span>
+        </label>
+        <label class="pill-option">
+         <input type="radio" name="stamp-style" value="lineart"/>
+         <span>简笔画</span>
+        </label>
+       </fieldset>
+      </div>
+      <div class="control-group">
+       <span class="control-label" aria-hidden="true">额度</span>
+       <fieldset class="pill-switch quota-switch" aria-label="切换额度票根状态">
+        <legend class="sr-only">额度票根状态</legend>
+        <label class="pill-option">
+         <input type="radio" name="quota-state" value="normal" checked=""/>
+         <span>正常</span>
+        </label>
+        <label class="pill-option">
+         <input type="radio" name="quota-state" value="low"/>
+         <span>低额度</span>
+        </label>
+        <label class="pill-option">
+         <input type="radio" name="quota-state" value="pro"/>
+         <span>Pro 重置卡</span>
+        </label>
+       </fieldset>
+      </div>
      </div>
     </div>
     <div class="features" id="panel-examples" data-character="claude" data-stamp-style="embossed" data-quota-state="normal">
@@ -186,8 +199,8 @@
        多个助手同时工作时，气泡会列出来源。点开详情，就能看到正在处理的任务。
       </p>
       <div class="feature-action">
-       <button type="button" class="detail-trigger" popovertarget="work-detail-popover">查看任务详情浮窗 ↗</button>
-       <div id="work-detail-popover" popover="auto" class="detail-popover" role="region" aria-label="任务详情预览">
+       <button type="button" class="detail-trigger work-trigger" popovertarget="work-detail-popover">查看任务详情浮窗 ↗</button>
+       <div id="work-detail-popover" popover="auto" class="detail-popover work-popover" role="region" aria-label="任务详情预览">
         <div class="detail-card-head">
          <strong class="detail-card-title">任务详情</strong>
          <span class="detail-source-pill">Antigravity · 工作中</span>
@@ -208,7 +221,9 @@
       <p>
        额度偏低或紧张时，数字和进度条随角色主题变色。Pro 仅返回周额度时，上行可显示重置卡张数。
       </p>
-      <div class="feature-action" aria-hidden="true"></div>
+      <div class="feature-action">
+       <button type="button" class="detail-trigger" id="quota-cycle-btn">体验低额度变色 ↻</button>
+      </div>
      </article>
      <article class="feature">
       <div class="feature-demo">
@@ -220,7 +235,18 @@
       <p>
        查看人民币余额和明细。实心色条代表充值，斜纹代表赠金，低于设定阈值时提醒。
       </p>
-      <div class="feature-action" aria-hidden="true"></div>
+      <div class="feature-action">
+       <button type="button" class="detail-trigger balance-trigger" popovertarget="balance-detail-popover">查看余额预警说明 ↗</button>
+       <div id="balance-detail-popover" popover="auto" class="detail-popover balance-popover" role="region" aria-label="DeepSeek 余额明细说明">
+        <div class="detail-card-head">
+         <strong class="detail-card-title">余额明细与预警</strong>
+         <span class="detail-source-pill">DSH · 人民币</span>
+        </div>
+        <div class="detail-card-banner">实心段：充值余额 · 斜纹段：平台赠金</div>
+        <p class="detail-card-body">客户端会按角色主题配色展示充值与赠金比例；余额低于自定义预警线（默认 ¥5.00）时自动切换醒目告警色。</p>
+        <div class="detail-card-foot">点空白处即可切换工作看板与余额视图</div>
+       </div>
+      </div>
      </article>
     </div>
     <p class="demo-note" id="demo-note">
@@ -316,10 +342,14 @@
      当前预览角色为小克。
     </p>
    </section>
-   <section aria-labelledby="setup" class="setup">
-    <h2 id="setup">
-     三步，来到你的桌面。
-    </h2>
+   <section aria-labelledby="setup" class="setup" id="setup-card" data-character="claude">
+    <div class="setup-head">
+     <h2 id="setup">三步，来到你的桌面。</h2>
+     <a class="btn btn-compact" href="https://github.com/uoweme325/AgentPet/releases/latest">
+      下载 Windows 便携版
+      <span aria-hidden="true">↓</span>
+     </a>
+    </div>
     <ol class="steps">
      <li>
       <strong>
@@ -410,7 +440,7 @@
     </a>
    </span>
   </footer>
-  <script defer="" src="/assets/pet-preview.js?v=165-polish">
+  <script defer="" src="/assets/pet-preview.js?v=165-polish2">
   </script>
  </body>
 </html>
