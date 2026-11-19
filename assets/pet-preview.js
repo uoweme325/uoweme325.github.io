@@ -152,7 +152,9 @@ function preloadRoleAssets(role, includeVariants = false) {
     urls.push(
       getPanelSrc(role, 'work', 'lineart', 'normal'),
       getPanelSrc(role, 'quota', 'lineart', 'normal'),
-      getPanelSrc(role, 'quota', 'embossed', 'low')
+      getPanelSrc(role, 'quota', 'embossed', 'low'),
+      getPanelSrc(role, 'quota', 'embossed', 'pro'),
+      getPanelSrc(role, 'quota', 'lineart', 'pro')
     );
   }
   preloadUrls(urls);
@@ -350,7 +352,7 @@ if (soundPreviewBtn) {
   soundPreviewBtn.addEventListener('click', () => {
     soundPreviewBtn.dataset.playing = 'true';
     playPreviewSound('task_complete.wav');
-    setSceneQuote('已播放 v1.6.4 任务完成提示音，', '客户端支持免打扰与隐藏静音。');
+    setSceneQuote('已播放任务完成提示音，', '客户端支持免打扰与隐藏静音。');
     window.setTimeout(() => {
       delete soundPreviewBtn.dataset.playing;
     }, 900);

@@ -73,7 +73,7 @@ h1,h2,h3 { line-height: 1.3; letter-spacing: -.04em; text-wrap: balance; }
 .site-footer { border-top: 0.0625rem solid var(--line); margin-top: 5.375rem; padding: 1.75rem 0 2.25rem; display: flex; justify-content: space-between; gap: 1.25rem; color: var(--muted); font-size: 0.8125rem; }
 .site-footer a { text-decoration: underline; text-underline-offset: 0.25rem; }
 .hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); align-items: center; gap: 3rem; padding: 4.125rem 0 3.5rem; }
-.hero h1 { font-size: clamp(3.5rem, 2.2rem + 4vw, 6.5rem); letter-spacing: -.07em; margin-bottom: 0.75rem; }
+.hero h1 { font-size: clamp(3.5rem, 2.2rem + 4vw, 6.5rem); line-height: 1.08; letter-spacing: -.07em; margin-bottom: 1rem; }
 .hero .tagline { font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem); font-weight: 650; line-height: 1.5; margin-bottom: 1.25rem; }
 .hero .intro { color: var(--muted); margin-bottom: 1.625rem; max-width: 26.875rem; }
 .release { color: var(--muted); font-size: 0.8125rem; margin: 1rem 0 0; }
@@ -386,8 +386,8 @@ h1,h2,h3 { line-height: 1.3; letter-spacing: -.04em; text-wrap: balance; }
 }
 .compat-part-desc {
   margin-top: .125rem;
-  font-size: .75rem;
-  color: var(--panel-subtext, var(--muted));
+  font-size: .8125rem;
+  color: color-mix(in oklab, var(--panel-subtext, var(--muted)) 72%, var(--ink));
   line-height: 1.35;
   white-space: nowrap;
   overflow: hidden;
@@ -550,7 +550,7 @@ h1,h2,h3 { line-height: 1.3; letter-spacing: -.04em; text-wrap: balance; }
 .character-input { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .footer-greeting { display: inline-flex; color: var(--accent); font-size: 0.875rem; font-weight: 600; }
 .setup { background: linear-gradient(135deg var(--gradient-space), var(--glass-soft), transparent), var(--mint); border: 0.0625rem solid var(--glass-edge); box-shadow: var(--glass-shadow); border-radius: 1.5rem; padding: 2.375rem; margin-top: 4.875rem; }
-.setup h2 { margin: 0 0 1.75rem; }
+.setup h2 { font-size: clamp(1.8rem, 1.35rem + 1.5vw, 2.8rem); margin: 0 0 1.75rem; }
 .steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 2rem; padding-left: 1.375rem; }
 .steps li { padding-left: 0.3125rem; }
 .steps strong { display: block; margin-bottom: 0.5rem; }
@@ -584,8 +584,9 @@ details p { max-width: 50rem; color: var(--muted); font-size: 0.875rem; margin: 
 @media (max-width: 40em) {
   .wrap { width: calc(100% - 2.25rem); }
   .site-nav { min-height: 4.25rem; gap: 0.625rem; padding-inline: 0.875rem; border-radius: 1.25rem; }
-  .brand { font-size: 1.125rem; }
-  .nav-links { gap: 1rem; font-size: 0.8125rem; }
+  .brand { font-size: 1.0625rem; }
+  .brand-mark { margin-right: 0.5rem; }
+  .nav-links { gap: 0.75rem; font-size: 0.8125rem; }
   .home-intro { padding: 3.125rem 0 2.25rem; }
   .project-grid, .hero { grid-template-columns: 1fr; }
   .project-art { height: 16.25rem; }
